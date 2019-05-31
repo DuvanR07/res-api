@@ -1,4 +1,4 @@
-package com.restaurante.demo.entity;
+package com.restaurante.resapi.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
