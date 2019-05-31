@@ -1,6 +1,6 @@
 package com.restaurante.resapi.repository;
 
-import com.restaurante.demo.entity.E_Persona;
+import com.restaurante.resapi.entity.E_Persona;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

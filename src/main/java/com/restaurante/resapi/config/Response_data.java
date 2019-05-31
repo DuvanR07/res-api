@@ -1,6 +1,5 @@
-package com.restaurante.demo.config;
+package com.restaurante.resapi.config;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class Response_data  {

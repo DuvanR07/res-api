@@ -1,4 +1,4 @@
-package com.restaurante.demo.config;
+package com.restaurante.resapi.config;
 
 import java.sql.Connection;
 

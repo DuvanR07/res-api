@@ -1,6 +1,6 @@
 package com.restaurante.resapi.model;
 
-import com.restaurante.demo.entity.E_Persona;
+import com.restaurante.resapi.entity.E_Persona;
 
 public class Persona_model {
     private long id;

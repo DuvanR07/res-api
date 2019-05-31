@@ -1,6 +1,6 @@
 package com.restaurante.resapi.model;
 
-import com.restaurante.demo.entity.E_Mesa;
+import com.restaurante.resapi.entity.E_Mesa;
 
 public class Mesa_model {
 

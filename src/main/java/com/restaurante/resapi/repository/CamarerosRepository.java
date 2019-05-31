@@ -1,7 +1,7 @@
 package com.restaurante.resapi.repository;
 
-import com.restaurante.demo.entity.E_Persona;
-import com.restaurante.demo.model.Camareros_model;
+import com.restaurante.resapi.entity.E_Persona;
+import com.restaurante.resapi.model.Camareros_model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Repository;

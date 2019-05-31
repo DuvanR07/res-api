@@ -1,18 +1,15 @@
-package com.restaurante.demo.controller;
+package com.restaurante.resapi.controller;
 
-import com.restaurante.demo.config.Response_data;
-import com.restaurante.demo.entity.E_Persona;
-import com.restaurante.demo.model.Camareros_model;
-import com.restaurante.demo.repository.CamarerosRepository;
-import com.restaurante.demo.repository.PersonaRepository;
+import com.restaurante.resapi.config.Response_data;
+import com.restaurante.resapi.entity.E_Persona;
+import com.restaurante.resapi.model.Camareros_model;
+import com.restaurante.resapi.repository.CamarerosRepository;
+import com.restaurante.resapi.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController     // This means that this class is a Controller
 @RequestMapping(path = "/Persona")
@@ -66,3 +63,5 @@ public class Persona {
         return camarerosRepository.TraerCamareros();
     }
 }
+
+
