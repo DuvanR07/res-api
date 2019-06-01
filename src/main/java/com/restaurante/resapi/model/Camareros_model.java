@@ -7,11 +7,11 @@ public class Camareros_model implements Serializable {
     public Camareros_model() throws Exception {
 
     }
-    public Camareros_model(String nombre, String apellido1, String apellido2, String tipo_persona, String mes, String total) throws  Exception {
+    public Camareros_model(String nombre, String apellido1, String apellido2, String tipo, String mes, String total) throws  Exception {
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
-        this.tipo_persona = tipo_persona;
+        this.tipo = tipo;
         this.mes = mes;
         this.total = total;
     }
@@ -20,7 +20,7 @@ public class Camareros_model implements Serializable {
     private String nombre;
     private String apellido1;
     private String apellido2;
-    private String tipo_persona;
+    private String tipo;
     private String mes;
     private String total;
 
@@ -49,12 +49,12 @@ public class Camareros_model implements Serializable {
         this.apellido2 = apellido2;
     }
 
-    public String getTipo_persona() {
-        return tipo_persona;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipo_persona(String tipo_persona) {
-        this.tipo_persona = tipo_persona;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getMes() {

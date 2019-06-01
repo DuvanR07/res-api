@@ -8,7 +8,7 @@ public class Persona_model {
     private String apellido1;
     private String apellido2;
     private String observacion;
-    private String tipo_persona;
+    private String tipo;
 
 
     public Persona_model(E_Persona e_persona) {
@@ -18,16 +18,16 @@ public class Persona_model {
         this.apellido1 = e_persona.getApellido1();
         this.apellido2 = e_persona.getApellido2();
         this.observacion = e_persona.getObservacion();
-        this.tipo_persona = e_persona.getTipo_persona();
+        this.tipo = e_persona.getTipo();
     }
 
-    public Persona_model(long id, String nombre, String apellido1, String apellido2, String observacion, String tipo_persona) {
+    public Persona_model(long id, String nombre, String apellido1, String apellido2, String observacion, String tipo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.observacion = observacion;
-        this.tipo_persona = tipo_persona;
+        this.tipo = tipo;
     }
 
     public long getId() {
@@ -70,11 +70,11 @@ public class Persona_model {
         this.observacion = observacion;
     }
 
-    public String getTipo_persona() {
-        return tipo_persona;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipo_persona(String tipo_persona) {
-        this.tipo_persona = tipo_persona;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

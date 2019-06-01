@@ -11,13 +11,13 @@ public class E_Persona implements Serializable {
 
     }
 
-    public E_Persona(long id, String nombre, String apellido1, String apellido2, String observacion, String tipo_persona) {
+    public E_Persona(long id, String nombre, String apellido1, String apellido2, String observacion, String tipo) {
         this.id= id;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.observacion = observacion;
-        this.tipo_persona = tipo_persona;
+        this.tipo = tipo;
     }
 
     @GeneratedValue
@@ -38,8 +38,8 @@ public class E_Persona implements Serializable {
     @Column(name = "observacion")
     private String observacion;
 
-    @Column(name = "tipo_persona")
-    private String tipo_persona;
+    @Column(name = "tipo")
+    private String tipo;
 
     public long getId() {
         return id;
@@ -81,12 +81,12 @@ public class E_Persona implements Serializable {
         this.observacion = observacion;
     }
 
-    public String getTipo_persona() {
-        return tipo_persona;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipo_persona(String tipo_persona) {
-        this.tipo_persona = tipo_persona;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
 
