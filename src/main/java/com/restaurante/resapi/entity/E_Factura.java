@@ -25,7 +25,7 @@ public class E_Factura {
     private long id;
 
     @JoinColumn(name = "id_cliente")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private E_Persona cliente;
 
 

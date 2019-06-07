@@ -5,13 +5,13 @@ import java.util.List;
 public class Response_data  {
     private String msj;
     private boolean err;
-    private List data;
+    private Object data;
 
     public  Response_data (){
 
     }
 
-    public Response_data(String msj, boolean err,List data) {
+    public Response_data(String msj, boolean err,Object data) {
         this.msj = msj;
         this.err = err;
         this.data = data;
@@ -33,7 +33,7 @@ public class Response_data  {
         this.err = err;
     }
 
-    public List getData() {
+    public Object getData() {
         return data;
     }
 

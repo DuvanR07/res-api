@@ -10,14 +10,22 @@ import com.restaurante.resapi.model.Persona_model;
 
 import antlr.collections.List;
 import org.springframework.stereotype.Component;
-/*
+
 @Component("convertidorPersona")
 public class C_Persona {
+    /*
     public List<Persona_model> convertirPersonas(List<E_Persona> personas){
         List<Persona_model> persona_model  = new ArrayList<>();
+
+        for(E_Persona per : persona_model){
+            persona_model.add(new Persona_model(per));
+        }
 
         return persona_model;
 
     }
+
+     */
 }
-*/
+
+

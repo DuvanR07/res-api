@@ -4,12 +4,9 @@ import com.restaurante.resapi.config.Response_data;
 import com.restaurante.resapi.entity.E_Persona;
 import com.restaurante.resapi.model.Camareros_model;
 import com.restaurante.resapi.model.Persona_model;
-import com.restaurante.resapi.repository.CamarerosRepository;
 import com.restaurante.resapi.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController     // This means that this class is a Controller
@@ -17,8 +14,8 @@ import java.util.List;
 public class Persona {
     @Autowired
     private PersonaRepository personaRepository;
-    private CamarerosRepository camarerosRepository;
 
+    //buscar la manera de recibir cada dato
     @PostMapping(path = "/guardar")
     public @ResponseBody
     Response_data crearUsuario(E_Persona persona) {
@@ -63,28 +60,41 @@ public class Persona {
 
 
     //LISTA DE PERSONAS POR TIPO
-    @GetMapping(path = "/nombre/{nombre}")
+    @GetMapping(path = "/nombre")
     public @ResponseBody
-    Iterable<Persona_model> listarPersonas(@PathVariable(name = "nombre") String nombre) {
-        return personaRepository.findByNombre(nombre);
+    E_Persona listarPersonas(@RequestParam(name = "name") long nombre) {
+        return personaRepository.findById(nombre).get();
     }
 
     @GetMapping(path = "/camareros")
     public @ResponseBody
-    Iterable<Persona_model> listarCamareros() {
-        return personaRepository.findByTipo("Camarero");
+    Iterable<Persona_model> listarCamareros(@RequestParam(name = "search") String nombre) {
+        return personaRepository.findByTipoAndNombreContaining("Camarero", nombre);
     }
 
     @GetMapping(path = "/clientes")
     public @ResponseBody
-    Iterable<Persona_model> listarClientes() {
-        return personaRepository.findByTipo("Cliente");
+    Iterable<Persona_model> listarClientes(@RequestParam(name = "search") String nombre) {
+        return personaRepository.findByTipoAndNombreContaining("Cliente", nombre);
     }
 
     @GetMapping(path = "/cocineros")
     public @ResponseBody
-    Iterable<Persona_model> listarCoconeros() {
-        return personaRepository.findByTipo("Cocinero");
+    Iterable<Persona_model> listarCoconeros(@RequestParam(name = "search") String nombre) {
+        return personaRepository.findByTipoAndNombreContaining("Cocinero", nombre);
+    }
+
+    @GetMapping(path = "/cama")
+    public @ResponseBody
+    Iterable<Camareros_model> camareros() {
+
+        try {
+            return personaRepository.camareros();
+        } catch (Exception ex) {
+            System.err.println(ex);
+        }
+        return null;
+
     }
 
 
