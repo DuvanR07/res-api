@@ -1,6 +1,7 @@
 package com.restaurante.resapi.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "factura")
 @Entity
@@ -11,7 +12,7 @@ public class E_Factura {
     }
 
 
-    public E_Factura(long id, E_Persona cliente, E_Persona camarero, E_Mesa mesa, long fecha_factura) {
+    public E_Factura(long id, E_Persona cliente, E_Persona camarero, E_Mesa mesa, Date fecha_factura) {
         this.id = id;
         this.cliente = cliente;
         this.camarero = camarero;
@@ -25,21 +26,22 @@ public class E_Factura {
     private long id;
 
     @JoinColumn(name = "id_cliente")
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private E_Persona cliente;
 
 
     @JoinColumn(name = "id_camarero")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private E_Persona camarero;
 
     @JoinColumn(name = "id_mesa")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private E_Mesa mesa;
 
 
     @Column(name = "fecha_factura")
-    private long fecha_factura;
+    @Temporal(TemporalType.DATE)
+    private Date fecha_factura;
 
 
     public long getId() {
@@ -74,11 +76,11 @@ public class E_Factura {
         this.mesa = mesa;
     }
 
-    public long getFecha_factura() {
+    public Date getFecha_factura() {
         return fecha_factura;
     }
 
-    public void setFecha_factura(long fecha_factura) {
+    public void setFecha_factura(Date fecha_factura) {
         this.fecha_factura = fecha_factura;
     }
 }

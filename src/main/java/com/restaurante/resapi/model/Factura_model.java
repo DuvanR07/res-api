@@ -4,6 +4,8 @@ import com.restaurante.resapi.entity.E_Factura;
 import com.restaurante.resapi.entity.E_Mesa;
 import com.restaurante.resapi.entity.E_Persona;
 
+import java.util.Date;
+
 public class Factura_model {
 
 
@@ -19,7 +21,7 @@ public class Factura_model {
 
 
 
-    public Factura_model(long id, E_Persona cliente, E_Persona camarero, E_Mesa mesa, long fecha_factura) {
+    public Factura_model(long id, E_Persona cliente, E_Persona camarero, E_Mesa mesa, Date fecha_factura) {
         this.id = id;
         this.cliente = cliente;
         this.camarero = camarero;
@@ -40,7 +42,7 @@ public class Factura_model {
 
 
 
-    private long fecha_factura;
+    private Date fecha_factura;
 
 
     public long getId() {
@@ -75,11 +77,11 @@ public class Factura_model {
         this.mesa = mesa;
     }
 
-    public long getFecha_factura() {
+    public Date getFecha_factura() {
         return fecha_factura;
     }
 
-    public void setFecha_factura(long fecha_factura) {
+    public void setFecha_factura(Date fecha_factura) {
         this.fecha_factura = fecha_factura;
     }
 

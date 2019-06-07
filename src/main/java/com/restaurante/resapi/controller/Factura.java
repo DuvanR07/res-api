@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/Factura")
@@ -57,7 +57,10 @@ public class Factura {
             camarero = personaRepository.findById(id_camarero).get();
             mesa = mesaRepository.findById(id_mesa).get();
 
-            factura.setFecha_factura(0);
+            LocalDateTime ldt = LocalDateTime.now();
+        //    String fecha = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(ldt);
+
+            factura.setFecha_factura(new Date());
             factura.setCliente(cliente);
             factura.setCamarero(camarero);
             factura.setMesa(mesa);

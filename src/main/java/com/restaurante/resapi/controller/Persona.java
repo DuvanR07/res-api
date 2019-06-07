@@ -4,6 +4,7 @@ import com.restaurante.resapi.config.Response_data;
 import com.restaurante.resapi.entity.E_Persona;
 import com.restaurante.resapi.model.Camareros_model;
 import com.restaurante.resapi.model.Persona_model;
+import com.restaurante.resapi.repository.CamarerosRepository;
 import com.restaurante.resapi.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 public class Persona {
     @Autowired
     private PersonaRepository personaRepository;
+
+
+    private CamarerosRepository camarerosRepository;
+
 
     //buscar la manera de recibir cada dato
     @PostMapping(path = "/guardar")
@@ -84,12 +89,13 @@ public class Persona {
         return personaRepository.findByTipoAndNombreContaining("Cocinero", nombre);
     }
 
+
     @GetMapping(path = "/cama")
     public @ResponseBody
     Iterable<Camareros_model> camareros() {
 
         try {
-            return personaRepository.camareros();
+            return camarerosRepository.camareros();
         } catch (Exception ex) {
             System.err.println(ex);
         }
@@ -98,26 +104,7 @@ public class Persona {
     }
 
 
-    /*
-    @GetMapping(path = "/camareros")
-    public List<Camareros_model> listarCamareros() {
-        return camarerosRepository.TraerCamareros();
-    }
 
-
-    public class ListaestudiantesController {
-	  public List <Estudiantes> getEstudiantes(){
-		  ArrayList<Estudiantes> est = new ArrayList<>();
-		  est.add(new Estudiantes("1124865870","wilson","liñeiro","4205344"));
-		  est.add(new Estudiantes("1124462870","darwin","quiroz","4205324"));
-		  est.add(new Estudiantes("1124423870","mayra","lopez","4205354"));
-		  return est;
-
-
-
-	  }
-
-    */
 }
 
 

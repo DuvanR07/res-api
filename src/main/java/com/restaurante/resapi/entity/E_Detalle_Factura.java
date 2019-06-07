@@ -24,11 +24,11 @@ public class E_Detalle_Factura {
     private long id;
 
     @JoinColumn(name = "id_factura")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private E_Factura factura;
 
     @JoinColumn(name = "id_cocinero")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private E_Persona cocinero;
 
     @Column(name = "plato")
