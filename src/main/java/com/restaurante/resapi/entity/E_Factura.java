@@ -20,7 +20,7 @@ public class E_Factura {
         this.fecha_factura = fecha_factura;
     }
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "_id")
     private long id;

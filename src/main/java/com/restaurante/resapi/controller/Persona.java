@@ -30,7 +30,7 @@ public class Persona {
             response_data = new Response_data("Registro guardado exitosamente", false, null);
 
         } catch (Exception ex) {
-            personaRepository.save(persona);
+            //personaRepository.save(persona);
             response_data = new Response_data("Error al guardar el registro", true, null);
         }
         return response_data;

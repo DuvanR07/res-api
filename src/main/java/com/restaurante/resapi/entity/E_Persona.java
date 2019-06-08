@@ -7,12 +7,12 @@ import java.io.Serializable;
 @Entity
 public class E_Persona implements Serializable {
 
-    public  E_Persona(){
+    public E_Persona() {
 
     }
 
     public E_Persona(long id, String nombre, String apellido1, String apellido2, String observacion, String tipo) {
-        this.id= id;
+        this.id = id;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
@@ -20,7 +20,7 @@ public class E_Persona implements Serializable {
         this.tipo = tipo;
     }
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "_id")
     private long id;

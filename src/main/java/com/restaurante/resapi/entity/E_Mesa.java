@@ -17,7 +17,7 @@ public class E_Mesa {
         this.ubicacion = ubicacion;
     }
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "_id")
     private long id;

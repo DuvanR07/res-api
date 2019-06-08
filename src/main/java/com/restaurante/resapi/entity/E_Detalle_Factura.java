@@ -18,17 +18,18 @@ public class E_Detalle_Factura {
         this.valor = valor;
     }
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
     @Column(name = "_id")
     private long id;
 
     @JoinColumn(name = "id_factura")
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private E_Factura factura;
 
     @JoinColumn(name = "id_cocinero")
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private E_Persona cocinero;
 
     @Column(name = "plato")
