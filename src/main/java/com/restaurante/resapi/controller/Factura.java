@@ -85,10 +85,10 @@ public class Factura {
                 }
             }
 
-            response_data = new Response_data("Registro guardado exitosamente " + id_cliente, false, factura);
+            response_data = new Response_data("Registro guardado exitosamente " , false, factura);
 
         } catch (Exception ex) {
-            response_data = new Response_data("Error al guardar el registro " + id_cliente, true, factura);
+            response_data = new Response_data("Error al guardar el registro " , true, factura);
             System.err.println(ex);
         }
 
