@@ -1,75 +1,79 @@
 package com.restaurante.resapi.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.restaurante.resapi.config.Response_data;
 import com.restaurante.resapi.entity.E_Detalle_Factura;
 import com.restaurante.resapi.entity.E_Factura;
 import com.restaurante.resapi.entity.E_Mesa;
 import com.restaurante.resapi.entity.E_Persona;
-import com.restaurante.resapi.model.Factura_model;
-import com.restaurante.resapi.model.Persona_model;
-import com.restaurante.resapi.repository.DetalleFacturaRepository;
-import com.restaurante.resapi.repository.FacturaRepository;
-import com.restaurante.resapi.repository.MesaRepository;
-import com.restaurante.resapi.repository.PersonaRepository;
-import jdk.internal.org.objectweb.asm.TypeReference;
-import org.apache.tomcat.util.json.JSONParser;
+import com.restaurante.resapi.service.DetalleFacturaService;
+import com.restaurante.resapi.service.FacturaService;
+import com.restaurante.resapi.service.MesaService;
+import com.restaurante.resapi.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JsonParser;
-import org.springframework.boot.json.JsonParserFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/Factura")
 public class Factura {
     @Autowired
-    private FacturaRepository facturaRepository;
+private PersonaService personaService;
+
     @Autowired
-    private PersonaRepository personaRepository;
+    private DetalleFacturaService detalleFacturaService;
+
     @Autowired
-    private MesaRepository mesaRepository;
+    private MesaService mesaService;
+
     @Autowired
-    private DetalleFacturaRepository detalleFacturaRepository;
+    private FacturaService facturaService;
 
 
     @PostMapping(path = "/guardar")
-    public @ResponseBody
-    Response_data crearFactura(HttpServletRequest request, @RequestParam(name = "id_camarero") long id_camarero, @RequestParam(name = "id_cliente") long id_cliente, @RequestParam(name = "id_mesa") long id_mesa) {
+    ResponseEntity<?> crearFactura(@RequestBody Map<String,Object> request) {
 
+        Map<String, Object> response = new HashMap<>();
 
-        Response_data response_data = new Response_data();
         E_Persona cliente = new E_Persona();
         E_Persona camarero = new E_Persona();
         E_Mesa mesa = new E_Mesa();
         E_Factura factura = new E_Factura();
 
+        try {
+            cliente = personaService.findById(Long.parseLong(request.get("id_cliente").toString()));
+            camarero = personaService.findById(Long.parseLong(request.get("id_camarero").toString()));
+            mesa = mesaService.findById(Long.parseLong(request.get("id_mesa").toString()));
+
+        }catch (Exception ex){
+            System.err.println(ex.getMessage());
+            response.put("message", "Error al comprobar las llaves foraneas");
+            response.put("err", true);
+            response.put("info", ex.getMessage().concat(": ").concat(ex.getCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        factura.setFecha_factura(new Date());
+        factura.setCliente(cliente);
+        factura.setCamarero(camarero);
+        factura.setMesa(mesa);
+
+        List<Object> lista = (List<Object>) request.get("detalle");
+       // JsonParser strParser = JsonParserFactory.getJsonParser();
+       // List<Object> lista = strParser.parseList(request.getParameter("detalle"));
+
+        if (lista.isEmpty()){
+            response.put("message", "El detalle de la factura no puede estar vacio");
+            response.put("err", true);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_ACCEPTABLE);
+        }
 
         try {
-            cliente = personaRepository.findById(id_cliente).get();
-            camarero = personaRepository.findById(id_camarero).get();
-            mesa = mesaRepository.findById(id_mesa).get();
 
-            LocalDateTime ldt = LocalDateTime.now();
-        //    String fecha = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(ldt);
-
-            factura.setFecha_factura(new Date());
-            factura.setCliente(cliente);
-            factura.setCamarero(camarero);
-            factura.setMesa(mesa);
-
-            factura = facturaRepository.save(factura);
-
-
-            JsonParser strParser = JsonParserFactory.getJsonParser();
-            List<Object> lista = strParser.parseList(request.getParameter("detalle"));
+            factura = facturaService.save(factura);
 
             for (Object o : lista) {
                 if (o instanceof Map) {
@@ -77,22 +81,24 @@ public class Factura {
                     E_Detalle_Factura detalle_factura = new E_Detalle_Factura();
                     detalle_factura.setPlato(item.get("plato").toString());
                     detalle_factura.setValor(Integer.parseInt(item.get("valor").toString()));
-                    detalle_factura.setCocinero(personaRepository.findById(Long.parseLong(item.get("id_cocinero").toString())).get());
+                    detalle_factura.setCocinero(personaService.findById(Long.parseLong(item.get("id_cocinero").toString())));
                     detalle_factura.setFactura(factura);
-                    System.out.println("ID DETALLE: " + factura.getId());
-                    detalleFacturaRepository.save(detalle_factura);
-
+                    detalleFacturaService.save(detalle_factura);
                 }
             }
 
-            response_data = new Response_data("Registro guardado exitosamente " , false, factura);
-
-        } catch (Exception ex) {
-            response_data = new Response_data("Error al guardar el registro " , true, factura);
-            System.err.println(ex);
+        } catch (DataAccessException ex) {
+            response.put("message", "Error al guardar la factura");
+            response.put("err", true);
+            response.put("info", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return response_data;
+        response.put("message", "Guardado exitosamente");
+        response.put("err", false);
+        response.put("data", factura);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+
 
     }
 
