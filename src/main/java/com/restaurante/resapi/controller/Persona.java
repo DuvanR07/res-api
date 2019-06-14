@@ -1,6 +1,8 @@
 package com.restaurante.resapi.controller;
 
 import com.restaurante.resapi.entity.E_Persona;
+import com.restaurante.resapi.model.Camareros_model;
+import com.restaurante.resapi.repository.CamarerosRepository;
 import com.restaurante.resapi.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -17,6 +20,9 @@ import java.util.Map;
 public class Persona {
     @Autowired
     private PersonaService personaService;
+
+    @Autowired
+    private CamarerosRepository camarerosRepository;
 
 
     @PostMapping(path = "/guardar")
@@ -90,6 +96,16 @@ public class Persona {
         return personaService.findByTipoAndNombreContaining("Cocinero", nombre);
     }
 
+    //CONSULTAS CON NATIVE QUERY
+
+    /*
+    @GetMapping(path = "/camareroslista")
+    public  @ResponseBody
+    List<?> cam(){
+        return camarerosRepository.camareros();
+    }
+
+     */
 
 
 
