@@ -2,7 +2,8 @@ package com.restaurante.resapi.controller;
 
 import com.restaurante.resapi.entity.E_Persona;
 import com.restaurante.resapi.model.Camareros_model;
-import com.restaurante.resapi.repository.CamarerosRepository;
+import com.restaurante.resapi.model.Clientes_model;
+import com.restaurante.resapi.repository.ConsultasRepository;
 import com.restaurante.resapi.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -22,7 +23,7 @@ public class Persona {
     private PersonaService personaService;
 
     @Autowired
-    private CamarerosRepository camarerosRepository;
+    private ConsultasRepository consultasRepository;
 
 
     @PostMapping(path = "/guardar")
@@ -60,7 +61,7 @@ public class Persona {
         Map<String, Object> response = new HashMap<>();
 
         try {
-           // E_Persona usuarioParaEliminar = personaRepository.findById(id).get();
+            // E_Persona usuarioParaEliminar = personaRepository.findById(id).get();
             personaService.delete(id);
 
         } catch (DataAccessException ex) {
@@ -97,16 +98,47 @@ public class Persona {
     }
 
     //CONSULTAS CON NATIVE QUERY
-
-    /*
     @GetMapping(path = "/camareroslista")
-    public  @ResponseBody
-    List<?> cam(){
-        return camarerosRepository.camareros();
+    public @ResponseBody
+    ResponseEntity<?> camareroslista() {
+        Map<String, Object> response = new HashMap<>();
+        List<Camareros_model> camareros = null;
+        try {
+            camareros = consultasRepository.camareros();
+
+        } catch (DataAccessException ex) {
+            response.put("message", "Error al ejecutar la consulta");
+            response.put("err", true);
+            response.put("info", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("message", "Se han encontrado " + camareros.size() + " resultados");
+        response.put("err", false);
+        response.put("data", camareros);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
     }
 
-     */
 
+    @GetMapping(path = "/clienteslista")
+    public @ResponseBody
+    ResponseEntity<?> clienteslista() {
+        Map<String, Object> response = new HashMap<>();
+        List<Clientes_model> clientes = null;
+        try {
+            clientes = consultasRepository.clientes();
+
+        } catch (DataAccessException ex) {
+            response.put("message", "Error al ejecutar la consulta");
+            response.put("err", true);
+            response.put("info", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("message", "Se han encontrado " + clientes.size() + " resultados");
+        response.put("err", false);
+        response.put("data", clientes);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
 
 
 }
