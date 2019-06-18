@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -66,8 +67,25 @@ public class Mesa {
 
     @GetMapping(path = "/listar")
     public @ResponseBody
-    Iterable<E_Mesa> listarUsuarios() {
-        return mesaService.findAll();
+    ResponseEntity<?> listarUsuarios() {
+
+        Map<String, Object> response = new HashMap<>();
+        List<E_Mesa> mesas = null;
+
+        try {
+            mesas = mesaService.findAll();
+
+        } catch (DataAccessException ex) {
+            response.put("message", "Error al ejecutar la consulta");
+            response.put("err", true);
+            response.put("info", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("message", "Se han encontrado " + mesas.size() + " resultados");
+        response.put("err", false);
+        response.put("data", mesas);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
 

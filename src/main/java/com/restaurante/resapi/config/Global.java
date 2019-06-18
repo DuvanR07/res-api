@@ -1,50 +1,51 @@
 package com.restaurante.resapi.config;
 
+import jdk.internal.cmm.SystemResourcePressureImpl;
+
 public  class Global {
 
-   public static String mes(Integer n) {
-        String mes = "No registra";
+   public static String mes(String mes) {
 
-        switch (n) {
-            case 1:
+        switch (mes) {
+            case "1":
                 mes = "Enero";
                 break;
-            case 2:
+            case "2":
                 mes = "Febrero";
                 break;
-            case 3:
+            case "3":
                 mes = "Marzo";
                 break;
-            case 4:
+            case "4":
                 mes = "Abril";
                 break;
-            case 5:
+            case "5":
                 mes = "Mayo";
                 break;
-            case 6:
+            case "6":
                 mes = "Junio";
                 break;
-            case 7:
+            case "7":
                 mes = "Julio";
                 break;
-            case 8:
+            case "8":
                 mes = "Agosto";
                 break;
-            case 9:
+            case "9":
                 mes = "Septiembre";
                 break;
-            case 10:
+            case "10":
                 mes = "Octubre";
                 break;
-            case 11:
+            case "11":
                 mes = "Noviembre";
                 break;
-            case 12:
+            case "12":
                 mes = "Diciembre";
                 break;
 
         }
-        return mes;
+       return  mes;
     }
 
 

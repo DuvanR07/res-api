@@ -29,8 +29,8 @@ public class ConsultasRepository {
             camarero.setApellido1(ob[1].toString());
             camarero.setApellido2(ob[2].toString());
             camarero.setTipo(ob[3].toString());
-            // camarero.setMes(Global.mes(Integer.parseInt(ob[4].toString())));
-            //  camarero.setTotal(Integer.parseInt( ob[5].toString()));
+            camarero.setMes(Global.mes(ob[4].toString()));
+            camarero.setTotal(Integer.parseInt(ob[5].toString()));
 
             listaCamareros.add(camarero);
         }

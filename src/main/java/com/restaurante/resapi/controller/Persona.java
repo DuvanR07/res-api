@@ -52,8 +52,24 @@ public class Persona {
 
     @GetMapping(path = "/listar")
     public @ResponseBody
-    Iterable<E_Persona> listarUsuarios() {
-        return personaService.findAll();
+    ResponseEntity<?> listarUsuarios() {
+        Map<String, Object> response = new HashMap<>();
+        List<E_Persona> personas = null;
+
+        try {
+            personas = personaService.findAll();
+
+        } catch (DataAccessException ex) {
+            response.put("message", "Error al ejecutar la consulta");
+            response.put("err", true);
+            response.put("info", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("message", "Se han encontrado " + personas.size() + " resultados");
+        response.put("err", false);
+        response.put("data", personas);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/eliminar/{id}")

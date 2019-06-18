@@ -81,7 +81,8 @@ public class Camareros_model implements Serializable {
             "`persona`.`apellido2`,\n" +
             "`persona`.`tipo`,\n" +
             "COALESCE(MONTH(`factura`.`fecha_factura`),\"No registra\") AS mes,\n" +
-            "COALESCE(SUM(`detalle_factura`.`valor`),\"0\") AS total\n" +
+            "COALESCE(SUM(`detalle_factura`.`valor`),0) AS total\n" +
+            ",persona.`_id`\n" +
             "FROM\n" +
             "    `res_api`.`detalle_factura`\n" +
             "   INNER JOIN `res_api`.`factura` \n" +
