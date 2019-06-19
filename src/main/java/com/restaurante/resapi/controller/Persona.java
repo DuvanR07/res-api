@@ -7,9 +7,13 @@ import com.restaurante.resapi.repository.ConsultasRepository;
 import com.restaurante.resapi.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -155,6 +159,30 @@ public class Persona {
         response.put("data", clientes);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
+
+
+    @GetMapping(path = "/page/{page}")
+    public @ResponseBody
+    Page<?> index(@PathVariable Integer page) {
+
+        if(page<=0 || page==null){
+            page=1;
+        }
+
+        Pageable pageable = PageRequest.of((page-1),2);
+
+        Page<E_Persona> personas = null;
+
+        try {
+            personas = personaService.findPage(pageable);
+
+        } catch (DataAccessException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        return personas;
+
+    }
+
 
 
 }

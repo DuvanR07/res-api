@@ -3,6 +3,8 @@ package com.restaurante.resapi.service;
 import com.restaurante.resapi.entity.E_Persona;
 import com.restaurante.resapi.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,12 @@ public class PersonaService {
     public List<E_Persona> findAll() {
         return (List<E_Persona>) personaRepository.findAll();
     }
+
+    @Transactional(readOnly = true)
+    public Page<E_Persona> findPage(Pageable pageable) {
+        return personaRepository.findAll(pageable);
+    }
+
 
     @Transactional
     public E_Persona save(E_Persona persona) {
