@@ -163,14 +163,15 @@ public class Persona {
 
     @GetMapping(path = "/page/{page}")
     public @ResponseBody
-    Page<?> index(@PathVariable Integer page) {
+    Page<?> index(@PathVariable Integer page, @RequestParam(name = "size", defaultValue = "10") Integer size) {
 
-        if(page<=0 || page==null){
-            page=1;
+        if (page <= 0 || page == null) {
+            page = 1;
         }
 
-        Pageable pageable = PageRequest.of((page-1),2);
+        size = (size <= 0) ? 10 : size;
 
+        Pageable pageable = PageRequest.of((page - 1), size);
         Page<E_Persona> personas = null;
 
         try {
@@ -182,7 +183,6 @@ public class Persona {
         return personas;
 
     }
-
 
 
 }

@@ -4,6 +4,8 @@ import com.restaurante.resapi.entity.E_Mesa;
 import com.restaurante.resapi.entity.E_Persona;
 import com.restaurante.resapi.repository.MesaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,5 +35,10 @@ public class MesaService  {
         return mesaRepository.findById(id).orElse(null);
     }
 
+
+    @Transactional(readOnly = true)
+    public Page<E_Mesa> findPage(Pageable pageable) {
+        return mesaRepository.findAll(pageable);
+    }
 
 }

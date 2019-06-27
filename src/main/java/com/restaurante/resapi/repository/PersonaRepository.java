@@ -23,11 +23,5 @@ public interface PersonaRepository extends JpaRepository<E_Persona, Long> {
 
     public abstract E_Persona findById(Integer id);
 
-    @Query(value = "SELECT * FROM persona p WHERE nombre LIKE  %:ape%",nativeQuery = true)
-    public abstract List<E_Persona> caca(@Param("ape") String ape);
-
-
-
-
 
 }

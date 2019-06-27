@@ -7,6 +7,9 @@ import com.restaurante.resapi.repository.MesaRepository;
 import com.restaurante.resapi.service.MesaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -88,5 +91,28 @@ public class Mesa {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
+
+    @GetMapping(path = "/page/{page}")
+    public @ResponseBody
+    Page<?> index(@PathVariable Integer page, @RequestParam(name = "size", defaultValue = "10") Integer size) {
+
+        if (page <= 0 || page == null) {
+            page = 1;
+        }
+
+        size = (size <= 0) ? 10 : size;
+
+        Pageable pageable = PageRequest.of((page - 1), size);
+        Page<E_Mesa> mesas = null;
+
+        try {
+            mesas = mesaService.findPage(pageable);
+
+        } catch (DataAccessException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        return mesas;
+
+    }
 
 }
